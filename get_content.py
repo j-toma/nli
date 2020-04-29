@@ -38,7 +38,8 @@ def get_content(f):
         end = get_end(gf)
         if start < end:
             size = end - start
-            gf.seek(size)
+            #gf.seek(size)
+            gf.seek(start)
             content = gf.read(size)
             detex_content = subprocess.run(
                     ['detex'],
