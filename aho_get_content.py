@@ -102,7 +102,9 @@ def get_content(f):
                 )
         #elapsed_time = time.process_time() - t
         #print('detex elapsed:', elapsed_time)
-        return detex_content
+        #content = detex_content.stdout.decode('utf-8')
+        content = detex_content.stdout
+        return content
     else:
         return False
 
