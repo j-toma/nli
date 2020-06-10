@@ -33,7 +33,7 @@ def get_uni(f, unis):
     #elapsed_time = time.process_time() - t
     #print('find title elapsed:', elapsed_time)
     text = io.TextIOWrapper(io.BufferedReader(gzip.open(f)), \
-            encoding='utf8', errors='ignore').read(4000)
+            encoding='utf8', errors='ignore').read(6000)
     #elapsed_time = time.process_time() - t
     #print('read elapsed:', elapsed_time)
     hit = aho_corasick(text, unis)
