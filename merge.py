@@ -94,6 +94,6 @@ def merge(n):
     df_hit.to_pickle(pickle_file)
     return df_hit
 
-merge(100)
+merge(10)
 
 

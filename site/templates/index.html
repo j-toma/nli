@@ -1,0 +1,196 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>母语识别</title>
+  <link href="{{ url_for('static', filename='../static/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="../static/style.css" rel="stylesheet">
+  <!--
+  <link href="{{ url_for('static', filename='../static/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="../static/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/style.css" rel="stylesheet">
+  <script src="../static/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <div class="jumbotron" style="background-color:#00F3FF">
+  --!>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron">
+      <h1 class="display-4">母语识别工具</h1>
+      <p class="lead">这个工具试图分别本地人和中国人写的英文文本。</p>
+    </div>
+    <a href="try_it_out">Try it out! 直接试试！</a>
+  </div><br>
+
+  <div class="container">
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+          role="tab" aria-controls="home" aria-selected="true">Home 主页</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload"
+          role="tab" aria-controls="profile" aria-selected="false">Upload 上载</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="paste-tab" data-toggle="tab" href="#paste"
+          role="tab" aria-controls="contact" aria-selected="false">Paste 输入</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <h3>Home 主页</h3>
+        <h5>介绍</h5>
+        <p>该网站提供了一种机器学习模型，该模型试图将母语为英语的人的文字与母语不是英语的中国作者的文字区分开。</p>
+        <h5>数据</h5>
+        <p>该模型使用来自arxiv.org数据进行训练。下载之后，需要进行处理，主要有两步骤。第一步是确定主要作者所属的大学（如果有），把这个大学当作标签。第二步是获取论文的内容。</p>
+        <h5>模型</h5>
+        <p>定义此模型时，我决定用最小最简单的模型能够完成任务，我随便要求90%以上正确率。这个模型主要有两部分。第一是个TF-IDF
+        Vectorizer。第二步是将向量化的内容输入到个线性支持向量分类器。</p>
+        <h5>网页</h5>
+        <p>这个网页提供的sklearn模型到html内容的链接用python模块flask而完成的。设计方面使用bootstrap。</p>
+
+     
+      </div>
+      <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+        <h3>Upload</h3>
+        <form method="POST" action="{{url_for('pred_up')}}" enctype="multipart/form-data">
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" name="doc" class="custom-file-input" id="myInput" aria-describedby="myInput">
+              <label class="custom-file-label" for="myInput">Choose file</label>
+            </div>
+            <button type="submit" class='btn btn-primary'>Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="paste" role="tabpanel" aria-labelledby="paste-tab">
+        <h3>Paste</h3>
+        <form method="POST" action="{{url_for('pred_paste')}}" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1"></label>
+            <textarea class="form-control" name="paste" id="exampleFormControlTextarea1" rows="10"></textarea></br>
+          </div>
+          <button type="submit" class='btn btn-primary'>Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small blue pt-4">
+    
+      <!-- Footer Links -->
+      <div class="container-fluid text-center text-md-left">
+    
+        <!-- Grid row -->
+        <div class="row">
+    
+          <!-- Grid column -->
+          <div class="col-md-3 mt-md-0 mt-3">
+    
+            <!-- 
+            <h5 class="text-uppercase">Sources 资源</h5>
+            <p>这个项目使用这些工具</p>
+            --!>
+    
+          </div>
+          <!-- Grid column -->
+    
+          <hr class="clearfix w-100 d-md-none pb-3">
+    
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+    
+            <!-- Links -->
+    
+            <ul class="list-unstyled">
+              <li>
+                <a href="https://s3tools.org/s3cmd">S3cmd</a>
+              </li>
+              <li>
+                <a href="https://arxiv.org/">Arxiv</a>
+              </li>
+              <li>
+                <a href="https://github.com/staeiou/arxiv_archive">Arxiv_archive</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-md-3 mb-md-0 mb-3">
+            <ul class="list-unstyled">
+              <li>
+                <a href="https://github.com/pkubowicz/opendetex">Opendetex</a>
+              </li>
+              <li>
+                <a href="https://pypi.org/project/pyahocorasick/">Pyachocorsick</a>
+              </li>
+              <li>
+                <a href="https://www.nltk.org/">NLTK</a>
+              </li>
+            </ul>
+    
+          </div>
+          <!-- Grid column -->
+    
+          <!-- Grid column -->
+          <div class="col-md-3 mb-md-0 mb-3">
+    
+            <!-- Links -->
+    
+            <ul class="list-unstyled">
+              <li>
+                <a href="https://scikit-learn.org/stable/index.html">scikit-learn</a>
+              </li>
+              <li>
+                <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a>
+              </li>
+              <li>
+                <a href="https://getbootstrap.com/">Bootstrap</a>
+              </li>
+            </ul>
+    
+    
+            <!-- 
+            <h5 class="text-uppercase">Sources 资源</h5>
+            <p>这个项目使用这些工具</p>
+            --!>
+    
+          </div>
+    
+        </div>
+        <!-- Grid row -->
+    
+      </div>
+      <!-- Footer Links -->
+    
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">
+        <a href="https://www.ynu.edu.cn/">云南大学 Yunnan University</a>
+      </div>
+      <!-- Copyright -->
+    
+    </footer>
+    <!-- Footer -->
+
+
+  <script src="{{ url_for('static', filename='../static/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='../static/bootstrap.min.js') }}"></script>
+  <!--
+  <script src="../static/jquery.js"></script>
+  <script src="../static/bootstrap.min.js"></script>
+  --!>
+  <script>
+    document.querySelector('.custom-file-input').addEventListener('change',function(e){
+      var fileName = document.getElementById("myInput").files[0].name;
+      var nextSibling = e.target.nextElementSibling
+      nextSibling.innerText = fileName
+    })
+  </script>
+</body>
+</html>

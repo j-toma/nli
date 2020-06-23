@@ -1,0 +1,43 @@
+/*
+#customFile .custom-file-control:lang(en)::after {
+  content: "Select file...";
+}
+
+#customFile .custom-file-control:lang(en)::before {
+  content: "Click me";
+}
+
+.custom-file-control.selected:lang(en)::after {
+  content: "" !important;
+}
+
+.custom-file {
+  overflow: hidden;
+}
+.custom-file-control {
+  white-space: nowrap;
+}
+*/
+
+.jumbotron {
+  color: lightgray;
+  background-color: #007bff;
+}
+
+.page-footer {
+  color: lightgray;
+  background-color: #6610f2;
+  /*
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  */
+}
+
+.footer-copyright {
+  background-color: #6f42c1;
+}
+ 
+a {
+  color: lightgray;
+}

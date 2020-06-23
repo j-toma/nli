@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>Prediction</title>
+    <link href="static/style.css" rel="stylesheet">
+</head>
+<body>
+  <h4>Prediction: {{ data[0] }}</h4>
+  <h4>Probability: {{ data[1] }}</h4>
+  {% autoescape false %}
+  <p>Content: {{ data[2] }}</p>
+  {% endautoescape %}
+  <a href="/" class='btn'>go back</a>
+</body>
+</html>

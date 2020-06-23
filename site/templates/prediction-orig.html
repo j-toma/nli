@@ -1,0 +1,198 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prediction</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <!--
+  <link href="../static/bootstrap.min.css" rel="stylesheet">
+  <script src="../static/jquery.js"></script>
+  <script src="../static/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  --!>
+</head>
+<body>
+
+  
+  <div class="container">
+    {% if data[0] %}
+    <div class="alert alert-success">
+      <h1 class="display-4">作者的母语：英语</h1>
+      <p class="lead">成绩: {{ data[1] }}</h4>
+      <hr class="my-4">
+      <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">解释</a>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          一篇文章的等级越高，以英语为母语的人写出来的可能性就越大。 负值表示该模型预测文本是由第一语言为中文的人编写的。
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+      <h1 class="display-4">作者的母语：中文</h1>
+      <p class="lead">成绩: {{ data[1] }}</h4>
+      <hr class="my-4">
+      <p>一篇文章的等级越高，以英语为母语的人写出来的可能性就越大。
+      负值表示该模型预测文本是由非英语母语者撰写的。</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    <div class="accordion">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse"
+                               href="#collapseOne">Strong Non Nat ({{
+                               data[2][3]|length }})</a>
+        </div>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+          <div class="card-body">
+            <h2>Strong Non Nat</h2>
+            <p>some text</p>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Sentence Index</th>
+                  <th>Sentence</td>
+                  <th>Feature</th>
+                  <th>Feature Strength</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data[2][3] %}
+                <tr>
+                  <td>{{ item[0] }} </td>
+                  <td>{{ item[1] }} </td>
+                  <td>{{ item[2] }} </td>
+                  <td>{{ item[3] }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapseTwo">Weak
+            Non Nat ({{ data[2][2]|length }})</a>
+        </div>
+        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+          <div class="card-body">
+            <h2>Weak Non Nat</h2>
+            <p>some text</p>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Sentence Index</th>
+                  <th>Sentence</td>
+                  <th>Feature</th>
+                  <th>Feature Strength</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data[2][2] %}
+                <tr>
+                  <td>{{ item[0] }} </td>
+                  <td>{{ item[1] }} </td>
+                  <td>{{ item[2] }} </td>
+                  <td>{{ item[3] }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse"
+                               href="#collapseThree">Weak Nat ({{
+                               data[2][1]|length }})</a>
+        </div>
+        <div id="collapseThree" class="collapse" data-parent="#accordion">
+          <div class="card-body">
+            <h2>Weak Nat</h2>
+            <p>some text</p>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Sentence Index</th>
+                  <th>Sentence</td>
+                  <th>Feature</th>
+                  <th>Feature Strength</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data[2][1] %}
+                <tr>
+                  <td>{{ item[0] }} </td>
+                  <td>{{ item[1] }} </td>
+                  <td>{{ item[2] }} </td>
+                  <td>{{ item[3] }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table> 
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse"
+                               href="#collapseFour">Strong Nat ({{
+                               data[2][0]|length }})</a>
+        </div>
+        <div id="collapseFour" class="collapse" data-parent="#accordion">
+          <div class="card-body">
+            <h2>Strong Nat</h2>
+            <p>some text</p>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Sentence Index</th>
+                  <th>Sentence</td>
+                  <th>Feature</th>
+                  <th>Feature Strength</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data[2][0] %}
+                <tr>
+                  <td>{{ item[0] }} </td>
+                  <td>{{ item[1] }} </td>
+                  <td>{{ item[2] }} </td>
+                  <td>{{ item[3] }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <a href="/" class="float">Back</a>
+  <!--
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px">
+    <a href="/" class='btn-floating btn-secondary'>go back</a>
+  </div>
+  --!>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</body>
+</html>

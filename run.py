@@ -43,7 +43,7 @@ def under_sample(df):
     df_maj = df[df.native==True]
     df_min = df[df.native==False]
     
-    df_maj_under = resample(df_maj, replace=False, n_samples=df_min.shape[0],
+    df_maj_under = resample(df_maj, replace=False, n_samples=5*df_min.shape[0],
             random_state=123)
     
     df_under = pd.concat([df_min, df_maj_under])
@@ -65,12 +65,16 @@ def filter_categories(df):
     #df_cs = pd.concat(d.values())
     #return df_cs
     df1 = df[df['categories'].str.contains('cs.') & ~(df['categories'].str.contains('ics.'))]
+    #df1 = df[df['categories'].str.contains('cs.')
+            #| df['categories'].str.contains('econ.')
+            #| df['categories'].str.contains('q-fin.')
+    #        ]
     #df1 = df[~(df['categories'].str.contains('math.')) & ~(df['categories'].str.contains('ics.'))]
     return df1
 
 def cut_content(df):
     mean_len_content_before = df.content.apply(lambda x:len(x)).mean()
-    df.content = df.content.str[:20000]
+    df.content = df.content.str[:2000]
     mean_len_content_after = df.content.apply(lambda x:len(x)).mean()
     print('Average character count in content:')
     print('before cut:', mean_len_content_before, '| after cut:',
@@ -90,7 +94,10 @@ def run():
     df = filter_categories(df)
     
     # undersample majority class to size of minority
-    df_under = under_sample(df)
+    #df_under = under_sample(df)
+    print('Original counts:')
+    print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
+    df_under = df
     
     # trim content length for faster training
     #df_under = cut_content(df_under)
@@ -104,10 +111,13 @@ def run():
     
     clf = Pipeline(
             steps=[
-                ('tfidf', TfidfVectorizer(ngram_range=(2,4), analyzer='word',
-                    binary=True, max_features=50000)),
+                ('tfidf', TfidfVectorizer(ngram_range=(2,5), analyzer='word',
+                    binary=True, max_features=30000)),
                 #('feature_selection', SelectPercentile(mutual_info_classif, percentile=20)),
-                ('svc', LinearSVC(multi_class='crammer_singer')),
+                ('svc', LinearSVC(multi_class='crammer_singer',
+                    class_weight='balanced')),
+                #('svc', CalibratedClassifierCV(base_estimator=LinearSVC(multi_class='crammer_singer',
+                #class_weight='balanced'), cv=10, method='sigmoid')),
             ]
     )
 
@@ -151,11 +161,11 @@ def run():
     pretty_print_cm(cm, CLASS_LABELS)
     print("\nClassification Results:\n")
     print(metrics.classification_report(y_test, predicted, target_names=CLASS_LABELS, digits=4))
-    
-    dump(clf, 'pipe1.joblib')
-    print('pipeline dumped to pipe1.joblib')
+    #
+    #dump(clf, 'pipe1.joblib')
+    #print('pipeline dumped to pipe1.joblib')
 
-    feature_names = clf.named_steps.tfidf.get_feature_names() 
+    #feature_names = clf.named_steps.tfidf.get_feature_names() 
     # if using calibratedclassifierCV
     #coef_avg = 0
     #for i in clf.calibrated_classifiers_:
@@ -163,16 +173,16 @@ def run():
     #coef_avg  = coef_avg/len(clf.calibrated_classifiers_)
     #coefs_with_fns = sorted(zip(coef_avg, feature_names)) 
 
-    coefs_with_fns = sorted(zip(clf.named_steps.svc.coef_[0], feature_names)) 
-    df=pd.DataFrame(coefs_with_fns)
-    df.columns='coefficient','n-gram'
-    df.sort_values(by='coefficient')
-    pd.options.display.max_rows = 50 
-    print('top 50 ngrams indicating non native:')
-    print(df[:50])
-    print('top 50 ngrams indicating native:')
-    print(df[-50:])
-    print('----')
+    #coefs_with_fns = sorted(zip(clf.named_steps.svc.coef_[0], feature_names)) 
+    #df=pd.DataFrame(coefs_with_fns)
+    #df.columns='coefficient','n-gram'
+    #df.sort_values(by='coefficient')
+    #pd.options.display.max_rows = 50 
+    #print('top 50 ngrams indicating non native:')
+    #print(df[:50])
+    #print('top 50 ngrams indicating native:')
+    #print(df[-50:])
+    #print('----')
     #pickle.dump([clf, vectorizer], open('data/clf1.pickle', 'wb'))
     print('classifier, vectorizer, and features dumped to pickle clf1.pickle')
     print('run completed')
