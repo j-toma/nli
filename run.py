@@ -43,7 +43,7 @@ def under_sample(df):
     df_maj = df[df.native==True]
     df_min = df[df.native==False]
     
-    df_maj_under = resample(df_maj, replace=False, n_samples=5*df_min.shape[0],
+    df_maj_under = resample(df_maj, replace=False, n_samples=df_min.shape[0],
             random_state=123)
     
     df_under = pd.concat([df_min, df_maj_under])
@@ -69,7 +69,6 @@ def filter_categories(df):
             #| df['categories'].str.contains('econ.')
             #| df['categories'].str.contains('q-fin.')
     #        ]
-    #df1 = df[~(df['categories'].str.contains('math.')) & ~(df['categories'].str.contains('ics.'))]
     return df1
 
 def cut_content(df):
@@ -94,10 +93,10 @@ def run():
     df = filter_categories(df)
     
     # undersample majority class to size of minority
-    #df_under = under_sample(df)
-    print('Original counts:')
-    print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
-    df_under = df
+    df_under = under_sample(df)
+    #print('Original counts:')
+    #print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
+    #df_under = df
     
     # trim content length for faster training
     #df_under = cut_content(df_under)
@@ -108,10 +107,11 @@ def run():
     # set data
     X = df_under.content
     y = df_under.native
+    print('length of X:', len(X))
     
     clf = Pipeline(
             steps=[
-                ('tfidf', TfidfVectorizer(ngram_range=(2,5), analyzer='word',
+                ('tfidf', TfidfVectorizer(ngram_range=(2,3), analyzer='word',
                     binary=True, max_features=30000)),
                 #('feature_selection', SelectPercentile(mutual_info_classif, percentile=20)),
                 ('svc', LinearSVC(multi_class='crammer_singer',
@@ -140,6 +140,8 @@ def run():
     #clf = SelectFromModel(lsvc, prefit=False)
     #clf = LinearSVC(multi_class='crammer_singer')
     #clf = CalibratedClassifierCV(lsvc)
+    print('length of X_train:', len(X))
+    print('length of X_test:', len(X))
     
     s = time.time()
     print("Training LinearSVC...")
@@ -162,8 +164,8 @@ def run():
     print("\nClassification Results:\n")
     print(metrics.classification_report(y_test, predicted, target_names=CLASS_LABELS, digits=4))
     #
-    #dump(clf, 'pipe1.joblib')
-    #print('pipeline dumped to pipe1.joblib')
+    dump(clf, 'data/pipe1.joblib')
+    print('pipeline dumped to pipe1.joblib')
 
     #feature_names = clf.named_steps.tfidf.get_feature_names() 
     # if using calibratedclassifierCV
@@ -184,7 +186,7 @@ def run():
     #print(df[-50:])
     #print('----')
     #pickle.dump([clf, vectorizer], open('data/clf1.pickle', 'wb'))
-    print('classifier, vectorizer, and features dumped to pickle clf1.pickle')
+    #print('classifier, vectorizer, and features dumped to pickle clf1.pickle')
     print('run completed')
 
 run()

@@ -12,4 +12,5 @@
 !merge.py
 !run.py
 !site
-
+!requirements.txt
+!data/pipe1.joblib
