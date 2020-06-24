@@ -13,4 +13,6 @@
 !run.py
 !site
 !requirements.txt
+!data
+data/*
 !data/pipe1.joblib
