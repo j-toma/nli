@@ -12,5 +12,5 @@
 !merge.py
 !run.py
 !single.py
-!site
+!site/
 !requirements.txt
