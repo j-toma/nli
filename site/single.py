@@ -11,7 +11,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from pathlib import Path
 
 #clf, vectorizer = pickle.load(open('data/clf1.pickle','rb'))
-model_file = Path('/home/jtoma/nli/data/pipe1.joblib')
+model_file = Path('../data/pipe1.joblib')
 pipeline = load(model_file)
 clf = pipeline.named_steps.svc
 vectorizer = pipeline.named_steps.tfidf
