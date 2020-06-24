@@ -1,16 +1,18 @@
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 from joblib import load
-import os
-from prompt_toolkit import print_formatted_text, HTML
-from xml.sax.saxutils import escape
-from IPython.display import Markdown, display
-import html.parser
-html_parser = html.parser.HTMLParser()
+#import os
+#from prompt_toolkit import print_formatted_text, HTML
+#from xml.sax.saxutils import escape
+#from IPython.display import Markdown, display
+#import html.parser
+#html_parser = html.parser.HTMLParser()
 from markupsafe import Markup
 from nltk.tokenize import sent_tokenize, word_tokenize
+from pathlib import Path
 
 #clf, vectorizer = pickle.load(open('data/clf1.pickle','rb'))
-pipeline = load('/home/jtoma/nli/data/pipe1.joblib')
+model_file = Path('/home/jtoma/nli/data/pipe1.joblib')
+pipeline = load(model_file)
 clf = pipeline.named_steps.svc
 vectorizer = pipeline.named_steps.tfidf
 

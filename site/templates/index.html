@@ -6,6 +6,7 @@
   <title>母语识别</title>
   <link href="{{ url_for('static', filename='../static/bootstrap.min.css') }}" rel="stylesheet">
   <link href="../static/style.css" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <!--
   <link href="{{ url_for('static', filename='../static/bootstrap.min.css') }}" rel="stylesheet">
   <link href="../static/bootstrap.min.css" rel="stylesheet">
@@ -31,20 +32,25 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-          role="tab" aria-controls="home" aria-selected="true">Home 主页</a>
+          role="tab" aria-controls="home" aria-selected="true"><h3>Home 主页</h3></a>
       </li>
       <li class="nav-item" role="presentation">
         <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload"
-          role="tab" aria-controls="profile" aria-selected="false">Upload 上载</a>
+          role="tab" aria-controls="profile" aria-selected="false">
+          <h3>Upload 上载</h3>
+        </a>
       </li>
       <li class="nav-item" role="presentation">
         <a class="nav-link" id="paste-tab" data-toggle="tab" href="#paste"
-          role="tab" aria-controls="contact" aria-selected="false">Paste 输入</a>
+          role="tab" aria-controls="contact" aria-selected="false">
+          <h3>Paste 输入</h3>
+        </a>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <h3>Home 主页</h3>
+        
+        <br>
         <h5>介绍</h5>
         <p>该网站提供了一种机器学习模型，该模型试图将母语为英语的人的文字与母语不是英语的中国作者的文字区分开。</p>
         <h5>数据</h5>
@@ -58,7 +64,7 @@
      
       </div>
       <div class="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">
-        <h3>Upload</h3>
+        <br>
         <form method="POST" action="{{url_for('pred_up')}}" enctype="multipart/form-data">
           <div class="input-group">
             <div class="custom-file">
@@ -70,7 +76,7 @@
         </form>
       </div>
       <div class="tab-pane fade" id="paste" role="tabpanel" aria-labelledby="paste-tab">
-        <h3>Paste</h3>
+        <br>
         <form method="POST" action="{{url_for('pred_paste')}}" enctype="multipart/form-data">
           <div class="form-group">
             <label for="exampleFormControlTextarea1"></label>
