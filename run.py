@@ -86,10 +86,10 @@ def run():
     df = filter_categories(df)
     
     # undersample majority class to size of minority
-    #df_under = under_sample(df)
-    print('Original counts:')
-    print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
-    df_under = df
+    df_under = under_sample(df)
+    #print('Original counts:')
+    #print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
+    #df_under = df
     
     # trim content length for faster training
     #df_under = cut_content(df_under)
@@ -105,7 +105,7 @@ def run():
     clf = Pipeline(
             steps=[
                 ('tfidf', TfidfVectorizer(ngram_range=(2,3), analyzer='word',
-                    binary=True, max_features=30000)),
+                    binary=True, max_features=5000)),
                 ('svc', LinearSVC(multi_class='crammer_singer',
                     class_weight='balanced')),
             ]
