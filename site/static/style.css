@@ -24,14 +24,20 @@
   background-color: #007bff;
 }
 
-.page-footer {
+.footer {
+  text-align: center;
   color: lightgray;
   background-color: #6610f2;
-
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: 60px;
+  line-height: 60px;
+
   /*
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   */
 }
 
