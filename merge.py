@@ -64,25 +64,24 @@ def merge(n):
     keys = [additional_data[i]['article_id'] for i in
             range(len(additional_data))]
         
-        #df = df_all.drop(df_all[df_all.arxiv_id in keys].index)
-        #df = df_all[df_all.arxiv_id in keys]
-        #df = df_all[df_all.arxiv_id.isin(keys)]
     is_hit = df_all['arxiv_id'].isin(keys)
     df_hit = df_all[is_hit]
     
+    ### add uni
     uni_d = { additional_data[i]['article_id']: additional_data[i]['uni'] for
             i in range(len(additional_data)) }
-    #df_hit['uni'] = uni_d
     df_hit.loc[:,'uni'] = df_hit['arxiv_id'].map(uni_d)
     
+    ### add content
     content_d = { additional_data[i]['article_id']: additional_data[i]['content'] for
             i in range(len(additional_data)) }
-    #df_hit['content'] = content_d
     df_hit.loc[:,'content'] = df_hit['arxiv_id'].map(content_d)
     
+    ### add country of uni
     country_d = { el[1]:el[0] for el in unis_in_countries() }
     df_hit.loc[:,'country'] = df_hit['uni'].map(country_d)
     
+    ### give a column for native or non-native
     native_d = { el[1]:el[0] for el in native() }
     df_hit.loc[:,'native'] = df_hit['uni'].map(native_d)
 

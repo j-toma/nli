@@ -10,7 +10,6 @@ from sklearn.feature_selection import SelectFromModel, SelectKBest, SelectPercen
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from joblib import dump
-#import pickle
 import re
 import time
 
@@ -54,17 +53,11 @@ def under_sample(df):
     return df_under
 
 def filter_categories(df):
-    #cs_categories= [
-    #        'cs.AI','cs.CC','cs.CG','cs.CE','cs.CL','cs.CV','cs.CY','cs.CR','cs.DB','cs.DS','cs.DL',
-    #        'cs.DM','cs.DC','cs.ET','cs.FL','cs.GT','cs.GL','cs.GR','cs.AR','cs.IR','cs.LG','cs.LO',
-    #        'cs.MS','cs.MA','cs.MM','cs.NI','cs.NE','cs.NA','cs.OS','cs.OH','cs.PF','cs.PL','cs.RO',
-    #        'cs.SI','cs.SE','cs.SD','cs.SC','cs.SY']
-    #d = {}
-    #for cat in cs_categories:
-    #    d[cat] = df[df['categories'].str.contains(cat)]
-    #df_cs = pd.concat(d.values())
-    #return df_cs
+
+    # only cs and not physics
     df1 = df[df['categories'].str.contains('cs.') & ~(df['categories'].str.contains('ics.'))]
+
+    # cs, economics, quantitative finance
     #df1 = df[df['categories'].str.contains('cs.')
             #| df['categories'].str.contains('econ.')
             #| df['categories'].str.contains('q-fin.')
@@ -93,10 +86,10 @@ def run():
     df = filter_categories(df)
     
     # undersample majority class to size of minority
-    df_under = under_sample(df)
-    #print('Original counts:')
-    #print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
-    #df_under = df
+    #df_under = under_sample(df)
+    print('Original counts:')
+    print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
+    df_under = df
     
     # trim content length for faster training
     #df_under = cut_content(df_under)
@@ -113,20 +106,12 @@ def run():
             steps=[
                 ('tfidf', TfidfVectorizer(ngram_range=(2,3), analyzer='word',
                     binary=True, max_features=30000)),
-                #('feature_selection', SelectPercentile(mutual_info_classif, percentile=20)),
                 ('svc', LinearSVC(multi_class='crammer_singer',
                     class_weight='balanced')),
-                #('svc', CalibratedClassifierCV(base_estimator=LinearSVC(multi_class='crammer_singer',
-                #class_weight='balanced'), cv=10, method='sigmoid')),
             ]
     )
 
 
-    #print("Vectorizing...")
-    #vectorizer = TfidfVectorizer(ngram_range=(2,4), analyzer="word", binary=True)
-    #X_transformed = vectorizer.fit_transform(X)
-    #print("Vectorization complete")
-    #print('----')
     
     # if using multiclass need to encode labels
     #target_enc = LabelEncoder()
@@ -136,22 +121,15 @@ def run():
     X_train, X_test, y_train, y_test = train_test_split(X, y,
             test_size=0.2, random_state=7)
     
-    #lsvc = LinearSVC(multi_class='crammer_singer')
-    #clf = SelectFromModel(lsvc, prefit=False)
-    #clf = LinearSVC(multi_class='crammer_singer')
-    #clf = CalibratedClassifierCV(lsvc)
     print('length of X_train:', len(X))
     print('length of X_test:', len(X))
     
     s = time.time()
     print("Training LinearSVC...")
-    #lsvc.fit(X_train, y_train)
     clf.fit(X_train, y_train)
     print("Training Time" + str(time.time() -s ))
     s= time.time()
-    #print("Predicting...")
     print("Linear SVC Score- "+ str(clf.score(X_test, y_test)))
-    #print("Predicting Time" + str(time.time() -s ))
     print('----')
     
     

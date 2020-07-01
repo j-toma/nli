@@ -27,77 +27,57 @@ def process_tar(tar_name):
     '''
     directory = '/home/jtoma/nli/arxiv/dump'
     os.chdir(directory)
-    #tar_name = 'arXiv_src_1005_006.tar'
-    #t = time.process_time()
+
     ### countries specified in get_unis file
     unis = unis_in_countries()
-    #elt=time.process_time() - t
-    #print('make unis elapsed time:', elt)
-    #total_count = 0
-    #actual_count = 0
+
+    ### open file, get files in tar
     tar = tarfile.open(tar_name)
     members = tar.getmembers()
-    #print("num members:", len(members))
+
+    ### initialize return value
     ret = []
-    #contents = []
-    #hits = []
-    #content_times = []
-    #hit_times = []
+
     for member in members:
+
+        ### things in tar are not .gz
         if not member.isfile():
             continue
         else:
             article_id = member.name.rstrip('.gz')[5:]
-        #print('member.name:', member.name)
-        #total_count += 1
+
+        ### extract individual paper
         f = tar.extractfile(member)
-        #gf = gzip.open(f)
-        # only .gz can be read, must ignore .pdf's
+
         try: 
-            
-            #t = time.process_time()
+            ### get uni associated with primary author of individual paper
             unis_without_country = [ el[1] for el in unis ]
             hit = get_uni(f,unis_without_country)
-            #elt=time.process_time() - t
-            #hit_times.append(elt)
+
             if hit:
-            #print('get hit elapsed time:', elt)
-                #print(member.name,'has hit')
-                #t = time.process_time()
+
+                ### get content of paper
                 content = get_content(f)
-                #elt=time.process_time() - t
-                #content_times.append(elt)
-                #print('type content:', type(content))
-                #content = content.encode('utf-8').strip()
+
+                ### light preprocessing
                 if content and type(content) == bytes:
                     content = content.decode('utf-8','ignore')
                     content = content.replace('\n','')
-                #print(member.name,'has content')
-                    #contents.append(content)
-                    #hits.append(hit)
-                    #actual_count += 1
+
+                    ### only append object to return if paper has uni and
+                    ### content
                     obj = {
                             'article_id': article_id,
                             'uni': hit,
                             'content': content
                             }
                     ret.append(obj)
-                    #print('actual_count:', actual_count)
-                    #print('uni:',hit)
-                    #print('content:',content.stdout[:100])
-                    #print('content:',content[:1000])
             else:
                 pass
         except OSError:
             continue
-        #gf.close()
         f.close()
     tar.close()
-    #print('mean content time:', sum(content_times)/len(content_times))
-    #print('mean hit time:', sum(hit_times)/len(hit_times))
-    #print('num_hits:', len(hits))
-    #print('num_contents:',len(contents))
-    #return hits, contents
     return ret
 
 def process_tars():
