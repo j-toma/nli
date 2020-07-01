@@ -50,7 +50,7 @@ git clone https://github.com/j-toma/nli.git
 pip install requirements/site.txt
 python3 app.py
 ```
-因为模型超过github的最大文件大小的限制，请打开这个[腾讯微云文件夹](链接：https://share.weiyun.com/kbrvsZai)，密码为6fm395，下载pipe1.joblib。然后在nli文件夹里面创建一个叫做data的文件夹，把pipe1.joblib搬到data里面。
+因为模型超过github的最大文件大小的限制，请打开这个[腾讯微云文件夹](https://share.weiyun.com/kbrvsZai)，密码为6fm395，下载pipe1.joblib。然后在nli文件夹里面创建一个叫做data的文件夹，把pipe1.joblib搬到data里面。
 
 打开127.0.0.1:5000，上传或粘贴您要检查的内容。可以上传用腾讯微云里面的两个.txt文件来测试一下。test_true.txt作者的母语是英语，test_false.txt作者的母语是中文。
 
