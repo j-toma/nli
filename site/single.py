@@ -8,7 +8,7 @@ import os
 #html_parser = html.parser.HTMLParser()
 from markupsafe import Markup
 import nltk
-nltk.download('punkt')
+#nltk.download('punkt')
 from nltk.tokenize import sent_tokenize, word_tokenize
 from pathlib import Path
 
