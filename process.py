@@ -80,79 +80,6 @@ def process_tar(tar_name):
     tar.close()
     return ret
 
-def process_tars():
-    tar_files = [
-            'arXiv_src_1005_005.tar',
-            'arXiv_src_1005_002.tar',
-            'arXiv_src_1005_006.tar',
-            'arXiv_src_1008_001.tar',
-            'arXiv_src_1008_002.tar',
-            'arXiv_src_1008_003.tar',
-            'arXiv_src_1202_001.tar',
-            'arXiv_src_1202_002.tar',
-            'arXiv_src_1202_003.tar',
-            'arXiv_src_1304_001.tar',
-            'arXiv_src_1304_002.tar',
-            'arXiv_src_1304_003.tar',
-            'arXiv_src_1207_001.tar',
-            'arXiv_src_1207_002.tar',
-            'arXiv_src_1207_003.tar',
-            'arXiv_src_1207_004.tar',
-            'arXiv_src_1207_005.tar',
-            'arXiv_src_1207_006.tar',
-            # test 1
-            'arXiv_src_0711_001.tar',
-            'arXiv_src_0711_002.tar',
-            'arXiv_src_0711_003.tar',
-            'arXiv_src_0712_001.tar',
-            'arXiv_src_0712_002.tar',
-            'arXiv_src_0712_003.tar',
-            'arXiv_src_0801_001.tar',
-            'arXiv_src_0801_002.tar',
-            'arXiv_src_0801_003.tar',
-            'arXiv_src_0802_001.tar',
-            'arXiv_src_0802_002.tar',
-            'arXiv_src_0802_003.tar',
-            'arXiv_src_0803_001.tar',
-            'arXiv_src_0803_002.tar',
-            'arXiv_src_0803_003.tar',
-            'arXiv_src_0804_001.tar',
-            'arXiv_src_0804_002.tar',
-            'arXiv_src_0804_003.tar',
-            'arXiv_src_0805_001.tar',
-            'arXiv_src_0805_002.tar',
-            'arXiv_src_0805_003.tar',
-            # test 2
-            #'arXiv_src_1305_001.tar',
-            #'arXiv_src_1305_002.tar',
-            #'arXiv_src_1305_003.tar',
-            #'arXiv_src_1305_004.tar',
-            #'arXiv_src_1305_005.tar',
-            #'arXiv_src_1304_004.tar',
-            #'arXiv_src_1304_005.tar',
-            #'arXiv_src_1304_006.tar',
-            #'arXiv_src_1304_007.tar',
-            #'arXiv_src_1304_008.tar',
-            #'arXiv_src_1304_009.tar',
-            #'arXiv_src_1304_010.tar',
-            #'arXiv_src_1304_011.tar',
-            #'arXiv_src_1304_012.tar',
-            #'arXiv_src_1303_001.tar',
-            #'arXiv_src_1303_001.tar',
-            #'arXiv_src_1303_002.tar',
-            #'arXiv_src_1303_003.tar',
-            #'arXiv_src_1303_004.tar',
-            #'arXiv_src_1303_005.tar',
-            #'arXiv_src_1303_006.tar',
-            # text 3
-            ]
-    extracted_data = []
-    for tar in tar_files:
-        print('tar:', tar)
-        additional_data = process_tar(tar)
-        print(len(additional_data))
-        extracted_data = extracted_data + additional_data
-    return extracted_data
 
 def add_tars(n):
     # load list already added and current dataset
@@ -204,3 +131,76 @@ def add_tars(n):
 #            number=1)
 #        )
     
+#def process_tars():
+#    tar_files = [
+#            'arXiv_src_1005_005.tar',
+#            'arXiv_src_1005_002.tar',
+#            'arXiv_src_1005_006.tar',
+#            'arXiv_src_1008_001.tar',
+#            'arXiv_src_1008_002.tar',
+#            'arXiv_src_1008_003.tar',
+#            'arXiv_src_1202_001.tar',
+#            'arXiv_src_1202_002.tar',
+#            'arXiv_src_1202_003.tar',
+#            'arXiv_src_1304_001.tar',
+#            'arXiv_src_1304_002.tar',
+#            'arXiv_src_1304_003.tar',
+#            'arXiv_src_1207_001.tar',
+#            'arXiv_src_1207_002.tar',
+#            'arXiv_src_1207_003.tar',
+#            'arXiv_src_1207_004.tar',
+#            'arXiv_src_1207_005.tar',
+#            'arXiv_src_1207_006.tar',
+#            # test 1
+#            'arXiv_src_0711_001.tar',
+#            'arXiv_src_0711_002.tar',
+#            'arXiv_src_0711_003.tar',
+#            'arXiv_src_0712_001.tar',
+#            'arXiv_src_0712_002.tar',
+#            'arXiv_src_0712_003.tar',
+#            'arXiv_src_0801_001.tar',
+#            'arXiv_src_0801_002.tar',
+#            'arXiv_src_0801_003.tar',
+#            'arXiv_src_0802_001.tar',
+#            'arXiv_src_0802_002.tar',
+#            'arXiv_src_0802_003.tar',
+#            'arXiv_src_0803_001.tar',
+#            'arXiv_src_0803_002.tar',
+#            'arXiv_src_0803_003.tar',
+#            'arXiv_src_0804_001.tar',
+#            'arXiv_src_0804_002.tar',
+#            'arXiv_src_0804_003.tar',
+#            'arXiv_src_0805_001.tar',
+#            'arXiv_src_0805_002.tar',
+#            'arXiv_src_0805_003.tar',
+#            # test 2
+#            #'arXiv_src_1305_001.tar',
+#            #'arXiv_src_1305_002.tar',
+#            #'arXiv_src_1305_003.tar',
+#            #'arXiv_src_1305_004.tar',
+#            #'arXiv_src_1305_005.tar',
+#            #'arXiv_src_1304_004.tar',
+#            #'arXiv_src_1304_005.tar',
+#            #'arXiv_src_1304_006.tar',
+#            #'arXiv_src_1304_007.tar',
+#            #'arXiv_src_1304_008.tar',
+#            #'arXiv_src_1304_009.tar',
+#            #'arXiv_src_1304_010.tar',
+#            #'arXiv_src_1304_011.tar',
+#            #'arXiv_src_1304_012.tar',
+#            #'arXiv_src_1303_001.tar',
+#            #'arXiv_src_1303_001.tar',
+#            #'arXiv_src_1303_002.tar',
+#            #'arXiv_src_1303_003.tar',
+#            #'arXiv_src_1303_004.tar',
+#            #'arXiv_src_1303_005.tar',
+#            #'arXiv_src_1303_006.tar',
+#            # text 3
+#            ]
+#    extracted_data = []
+#    for tar in tar_files:
+#        print('tar:', tar)
+#        additional_data = process_tar(tar)
+#        print(len(additional_data))
+#        extracted_data = extracted_data + additional_data
+#    return extracted_data

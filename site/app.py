@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, request, url_for, flash, send
 import sys
 sys.path.append("/home/jtoma/nli")
 
-from single import run_display, display_upload, display_text
+from single import display_text
 
 UPLOAD_FOLDER = '/home/jtoma/nli/static'
 ALLOWED_EXTENSIONS = {'txt'}

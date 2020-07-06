@@ -68,41 +68,21 @@ def clean(content):
     return xml_free
 
 def get_content(f):
-    #prkint('enter get_content!')
-
-    #t = time.process_time()
     f.seek(0)
     s_strs, e_strs = make_keywords()
     kws = s_strs + e_strs
-    #elapsed_time = time.process_time() - t
-    #print('make keywords elapsed:', elapsed_time)
     text = io.TextIOWrapper(io.BufferedReader(gzip.open(f)), 
             encoding='utf8', errors='ignore').read()
     hits = aho_corasick(text, kws)
-    #elapsed_time = time.process_time() - t
-    #print('ahocorasick elapsed:', elapsed_time)
-    #print('hits:',hits)
     start, end = analyze_hits(hits)
     size = end[0] - start[0]
-    #print('start:', start)
-    #print('end:',end)
-    #print('size:',size)
     if size > 5000:
-        #f.seek(0)
-        #match = start[1][1].encode()
-        #start_loc = f.read().find(match)
-        #f.seek(start_loc)
         content = text[start[0]:end[0]].encode()
-        #elapsed_time = time.process_time() - t
-        #print('encode elapsed:', elapsed_time)
         detex_content = subprocess.run(
                 ['detex'],
                 input=content,
                 stdout=subprocess.PIPE
                 )
-        #elapsed_time = time.process_time() - t
-        #print('detex elapsed:', elapsed_time)
-        #content = detex_content.stdout.decode('utf-8')
         content = detex_content.stdout
         return content
     else:

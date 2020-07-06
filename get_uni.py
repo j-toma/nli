@@ -26,19 +26,12 @@ def aho_corasick(text, unis):
     return found_keywords
 
 def get_uni(f, unis):
-    #t = time.process_time()
     f.seek(0)
     title_loc = f.read().find(b'\\title{')
     f.seek(title_loc - 2000)
-    #elapsed_time = time.process_time() - t
-    #print('find title elapsed:', elapsed_time)
     text = io.TextIOWrapper(io.BufferedReader(gzip.open(f)), \
             encoding='utf8', errors='ignore').read(6000)
-    #elapsed_time = time.process_time() - t
-    #print('read elapsed:', elapsed_time)
     hit = aho_corasick(text, unis)
-    #elapsed_time = time.process_time() - t
-    #print('uni aho elapsed:', elapsed_time)
     if hit:
         return hit[0][1][1]
     else:

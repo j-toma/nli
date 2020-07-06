@@ -66,13 +66,14 @@ def filter_categories(df):
 
 def cut_content(df):
     mean_len_content_before = df.content.apply(lambda x:len(x)).mean()
-    df.content = df.content.str[:2000]
+    df.content = df.content.str[:20000]
     mean_len_content_after = df.content.apply(lambda x:len(x)).mean()
     print('Average character count in content:')
     print('before cut:', mean_len_content_before, '| after cut:',
             mean_len_content_after)
     print('----')
     return df
+
 
 
 def run():
@@ -85,7 +86,7 @@ def run():
     # filter categories
     df = filter_categories(df)
     
-    # undersample majority class to size of minority
+    # unkdersample majority class to size of minority
     df_under = under_sample(df)
     #print('Original counts:')
     #print('non native:', df[df.native == False].shape[0], '| native:', df[df.native == True].shape[0])
@@ -144,6 +145,15 @@ def run():
     #
     dump(clf, 'data/pipe1.joblib')
     print('pipeline dumped to pipe1.joblib')
+
+    dump([list(predicted), list(labels), list(x_test)], 'data/results1.pickle')
+    print('pipeline dumped to results1.pickle')
+
+    #dump(list(y_test), 'data/labels1.pickle')
+    #print('pipeline dumped to labels1.pickle')
+    
+    df_under.to_pickle('df_under1.pickle')
+    print('pipeline dumped to df_under1.pickle')
 
     #feature_names = clf.named_steps.tfidf.get_feature_names() 
     # if using calibratedclassifierCV
