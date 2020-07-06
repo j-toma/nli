@@ -1,4 +1,6 @@
 # 母语识别
+## DEMO
+![](demo2.gif)
 
 ### 项目解释
 -[项目提案](appIdea.pdf)
