@@ -122,8 +122,8 @@ def run():
     X_train, X_test, y_train, y_test = train_test_split(X, y,
             test_size=0.2, random_state=7)
     
-    print('length of X_train:', len(X))
-    print('length of X_test:', len(X))
+    print('length of X_train:', len(X_train))
+    print('length of X_test:', len(X_test))
     
     s = time.time()
     print("Training LinearSVC...")
@@ -145,15 +145,6 @@ def run():
     #
     dump(clf, 'data/pipe1.joblib')
     print('pipeline dumped to pipe1.joblib')
-
-    dump([list(predicted), list(labels), list(x_test)], 'data/results1.pickle')
-    print('pipeline dumped to results1.pickle')
-
-    #dump(list(y_test), 'data/labels1.pickle')
-    #print('pipeline dumped to labels1.pickle')
-    
-    df_under.to_pickle('df_under1.pickle')
-    print('pipeline dumped to df_under1.pickle')
 
     #feature_names = clf.named_steps.tfidf.get_feature_names() 
     # if using calibratedclassifierCV
