@@ -74,6 +74,24 @@ def cut_content(df):
     print('----')
     return df
 
+def get_fn_fp(df, predicted, y_test):
+    count_fn, count_fp  = 0, 0
+    fp_list, fn_list= [], []
+    for row_index, (prediction, label) in enumerate(zip (predicted, y_test)):
+        if prediction != label:
+            df_index = y_test.index.tolist()[row_index]
+            if label:
+                count_fn += 1
+                fn_list.append(df_index)
+            else:
+                count_fp += 1
+                fp_list.append(df_index)
+            #print('Row', row_index, 'has been classified as', prediction, 'and should be', label)
+    #print('num FN:', count_fn)
+    #print('FN list:', fn_list)
+    #print('num FP:', count_fp)
+    #print('FP list:', fp_list)
+    return list(df.loc[fn_list]['arxiv_id']), list(df.loc[fp_list]['arxiv_id'])
 
 
 def run():
@@ -98,6 +116,9 @@ def run():
     # remove nonlinguistic indicators
     df_under.content = df_under.content.apply(remove_bigram_stops)
 
+    # retain ids 
+    #df_under.set_index('arxiv_id', inplace=True)
+
     # set data
     X = df_under.content
     y = df_under.native
@@ -118,6 +139,7 @@ def run():
     #target_enc = LabelEncoder()
     #y = target_enc.fit_transform(y)
     
+
     #X_train, X_test, y_train, y_test = train_test_split(X_transformed, y,
     X_train, X_test, y_train, y_test = train_test_split(X, y,
             test_size=0.2, random_state=7)
@@ -135,7 +157,11 @@ def run():
     
     
     predicted = clf.predict(X_test)
-    
+
+    fn, fp = get_fn_fp(df_under, predicted, y_test)
+    print('false negatives:', fn)
+    print('false positives:', fp)
+
     print('Results')
     print("\nConfusion Matrix:\n")
     cm = metrics.confusion_matrix(y_test, predicted).tolist()
