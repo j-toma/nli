@@ -1,0 +1,137 @@
+https://arxiv.org/pdf/1510.05886.pdf
+Abstract: Using connected dominating set (CDS) to serve as a virtual backbone in
+a wireless networks can save energy and reduce interference. Since nodes may fail due
+to accidental damage or energy depletion, it is desirable that the virtual backbone has
+some fault-tolerance. A k-connected m-fold dominating set ((k, m)-CDS) of a graph G
+is a node set D such that every node in V \ D has at least m neighbors in D and the
+subgraph of G induced by D is k-connected. Using (k, m)-CDS can tolerate the failure of
+min{k ? 1, m ? 1} nodes. In this paper, we study Minimum Weight (1, m)-CDS problem
+((1, m)-MWCDS), and present an (H(?+m)+2H(??1))-approximation algorithm, where
+? is the maximum degree of the graph and H(?) is the Harmonic number. Notice that
+there is a 1.35 ln n-approximation algorithm for the (1, 1)-MWCDS problem, where n is
+the number of nodes in the graph. Though our constant in O(ln ?) is larger than 1.35, n
+is replaced by ?. Such a replacement enables us to obtain a 3.67-approximation for the
+connecting part of (1, m)-MWCDS problem on unit disk graphs.
+Keyword: m-fold dominating set, connected dominating set, non-submodular function, greedy algorithm, unit disk graph.
+1 Introduction
+A wireless sensor network (WSN) consists of spatially distributed autonomous sensors
+to monitor physical or environmental condition, and to cooperatively pass their data
+through the network. During recent years, WSN has been widely used in many fields,
+1
+such as environment and habitat monitoring, disaster recovery, health applications, etc.
+Since there is no fixed or predefined infrastructure in WSNs, frequent flooding of control
+messages from sensors may cause a lot of redundant contentions and collisions. Therefore,
+people have proposed the concept of virtual backbone which corresponds to a connected
+dominating set in a graph (Das and Bhargharan [4] and Ephremides et al. [8]).
+Given a graph G with node set V and edge set E, a subset of nodes C ? V is said to
+be a dominating set (DS) of G if any v ? V \ C is adjacent to at least one node of C. We
+say that a dominating set C of G is a connected dominating set of G if the subgraph of
+G induced by C, denoted by G[C], is connected. Nodes in C are called dominators, the
+nodes in V \ C are called dominatees.
+Because sensors in a WSN are prone to failures due to accidental damage or battery
+depletion, it is important to maintain a certain degree of redundancy such that the virtual
+backbone is more fault-tolerant. In a more general setting, every sensor has a cost, it
+is desirable that under the condition that tasks can be successfully accomplished, the
+whole cost of virtual backbone is as small as possible. These considerations lead to the
+Minimum Node-Weighted k-Connected m-Fold Dominating Set problem (abbreviated as
+(k, m)-MWCDS), which is defined as follows:
+Definition 1.1 ((k, m)-MWCDS). Let G be a connected graph, k and m be two positive
+integers, c : V ? R+ be a cost function on nodes. A node subset D ? V is an m-fold
+dominating set (m-DS) if every node in V \ D has at least m neighbors in D. It is a kconnected m-fold dominating set ((k, m)-CDS) if furthermore, the subgraph of G induced
+by D is k-connected. The (k, m)-MWCDS problem is to find a (k, m)-CDS D such that
+the cost of D is minimized, that is, c(D) = P
+u?D
+c(u) is as small as possible.
+After Dai and Wu [3] proposed using (k, k)-CDS as a model for fault-tolerant virtual
+backbone, a lot of approximation algorithms emerged, most of which are on unit disk
+graphs. In a unit disk graph (UDG), every node corresponds to a sensor on the plane,
+two nodes are adjacent if and only if the Euclidean distance between the corresponding
+sensors is at most one unit. There are a lot of studies on fault-tolerant virtual backbone
+in UDG which assume unit weight on each disk. However, for a general graph with a
+general weight function, related studies are rare.
+In this paper, we present a (H(? + m) + 2H(? ? 1))-approximation algorithm for the
+(1, m)-MWCDS problem on a general graph, where ? is the maximum degree of the graph,
+and H(?) = P?
+1
+1/i is the Harmonic number. It is a two-phase greedy algorithm. First,
+it constructs an m-fold dominating set D1 of G. Then it connects D1 by adding a set
+of connectors D2. It is well known that if the potential function and the cost function
+related with a greedy algorithm is monotone increasing and submodular, then an O(ln n)
+performance ration can be achieved. Unfortunately, for various minimum CDS problems,
+no such potential functions are known. Nevertheless, we manage, in this paper, to deal
+with a nonsubmodular potential function and achieve an O(ln ?) performance ratio.
+It should be pointed out that for a general graph, Guha and Khuller [11] proposed a
+1.35 ln n-approximation for the (1, 1)-MWCDS problem. Though our constant in O(ln n)
+2
+is larger, the parameter n in the performance ratio is replaced by ?. In many cases, ? might
+be substantially smaller than n. In particular, for an UDG, due to such an replacement,
+after having found an m-DS, the connecting part has a performance ratio at most 3.67. In
+[34], Zou et al. proposed a method for the connecting part with performance ratio at most
+3.875, which makes use of a 1.55-approximation algorithm [16] for the classic Minimum
+Steiner Tree problem. If using currently best ratio for Minimum Steiner Tree problem [1],
+then their ratio is at most 3.475. Notice that the algorithm in [1] uses randomized iterative
+rounding. So, although our ratio 3.67 is a litter larger than 3.475, our algorithm has the
+advantage that it is purely combinatorial. Furthermore, we believe that our method is
+also of more theoretical interests and may find more applications in the study of other
+related problems.
+The rest of this paper is organized as follows. Section 2 introduces related works.
+Some notation and some preliminary are given in Section 3. In Section 4, the algorithm
+is presented. Section 5 analyzes the performance ratio. Section 6 improves the ratio on
+unit disk graph. Section 7 concludes the paper.
+2 Related work
+The idea of using a connected dominating set as a virtual backbone for WSN was
+proposed by Das and Bhargharan [4] and Ephremides et al. [8]. Constructing a CDS
+of the minimum size is NP-hard. In fact, Guha and Khuller [11] proved that a minimum CDS cannot be approximated within ? ln n for any 0 < ? < 1 unless NP ?
+DT IME(n
+O(loglogn)
+). In the same paper, they proposed two greedy algorithms with performance ratios of 2(H(?)+ 1) and H(?)+ 2, respectively, where ? is the maximum degree
+of the graph and H(?) is the harmonic number. This was improved by Ruan et al. [17]
+to 2 + ln ?. Du et al. [5] presented a (1 + ?) ln(? ? 1)-approximation algorithm, where ?
+is an arbitrary positive real number.
+For unit disk graphs, a polynomial time approximation scheme (PTAS) was given by
+Cheng et al. [2], which was generalized to higher dimensional space by Zhang et al. [28].
+There are a lot of studies on distributed algorithms for this problem. For a comprehensive
+study on CDS in UDG, the readers may refer to the book [7].
+Considering the weighted version of the CDS problem, Guha and Khuller [11] proposed
+a (cn+1) ln n-approximation algorithm in a general graph, where cn ln k is the performance
+ratio for the node weighted Steiner tree problem (k is the number of terminal nodes to
+be connected). Later, they [12] improved it to an algorithm of performance ratio at most
+(1.35 + ?) ln n. For the minimum weight CDS in UDG, Zou et al. [34] gave a (9.875 + ?)-
+approximation.
+The problem of constructing fault-tolerant virtual backbones was introduced by Dai
+and Wu [3]. They proposed three heuristic algorithms for the minimum (k, k)-CDS problem. However, no performance ratio analysis was given. A lot of works have been done for
+the CDS problem in UDG. The first constant approximation algorithm in this aspect was
+3
+given by Wang et al. [24], who obtained a 72-approximation for the (2, 1)-CDS problem
+in UDG. Shang et al. [18] gave an algorithm for the minimum (1, m)-CDS problem and
+an algorithm for the minimum (2, m)-CDS problem in UDG, the performance ratios are
+5 + 5
+m
+for m ? 5 and 7 for m > 5, and 5 + 25
+m
+for 2 ? m ? 5 and 11 for m > 5, respectively. Constant approximation algorithms also exist for (3, m)-CDS in UDG [25, 26].
+Recently, Shi et al. [20] presented the first constant approximation algorithm for general
+(k, m)-CDS on UDG.
+For the fault-tolerant CDS problem in a general graph, Zhang et al. [30] gave a
+2rH(?r + m ? 1)-approximation for the minimum r-hop (1, m)-CDS problem, where ?r is
+the maximum degree in Gr
+, the r-th power graph of G. A node u is r-hop dominated by
+a set D if it is at most r-hops away from D. In particular, taking r = 1, the algorithm in
+[30] has performance ratio at most 2H(? + m ? 1) for the minimum (1, m)-CDS problem.
+This was improved by our recent work [33] to 2 + H(? + m ? 2). We also gave an
+(ln ? + o(ln ?))-approximation algorithm for the minimum (2, m)-CDS problem [19] and
+the minimum (3, m)-CDS problem [32] on a general graph.
+For the weighted version of fault-tolerant CDS problem on UDG, as a consequence of
+recent work [13], the minimum weight (1, 1)-CDS problem admits a PTAS. Combining
+the constant approximation algorithm for the minimum weight m-fold dominating set
+problem [9] and the 3.475-approximation algorithm for the connecting part [34], (1, m)-
+MWCDS on UDG admits a constant-approximation. Recently, we [20, 31] gave the first
+constant approximation algorithm for the general minimum weight (k, m)-CDS problem
+on unit disk graph.
+As far as we know, there is no previous work on the approximation of the weighted
+version of fault-tolerant CDS problem in a general graph.
+Notice that in [34], the 3.875-approximation for the connecting part is based on the
+1.55-approximation algorithm [16] for the classic minimum Steiner tree problem. If the
+best known ratio for the Steiner tree problem is used, which is 1.39 currently, then their
+connecting part has performance ratio at most 3.475. Notice that the 1.39-approximation
+for the Steiner tree problem uses randomized iterative rounding. So, although our performance ratio is larger than 3.475, it has the advantage that it is purely combinatorial.

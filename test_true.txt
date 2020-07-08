@@ -1,0 +1,267 @@
+https://arxiv.org/pdf/2006.01966.pdf
+true
+A central issue in cognitive science is the nature of the
+mental mapping between language and the world. One oftstudied question is how and why languages vary in the way
+they use words to partition semantic space (e.g., Berlin &
+Kay, 1969; Levinson & Meira, 2003). Polysemy?the use
+of a single word form to express multiple related senses?
+is a fundamental property of language that exemplifies this
+variation. Figure 1 shows how word forms across languages
+may differ in the sets of senses they cover. Despite this variation, there is also much cross-linguistic commonality in word
+meanings, as seen in the overlap of sense expression in Figure 1. How much do languages vary in their lexical semantics,
+and what contributes to the observed cross-linguistic patterns
+of polysemy? Here we present a principled and large-scale
+computational approach to these questions.
+Work in typology?studies of the constrained variation
+exhibited by languages?has identified important crosslinguistic generalizations regarding polysemy patterns across
+many semantic domains. For example, some research has focused on the primitives that underlie cross-linguistic lexical
+categorization (e.g., Berlin & Kay, 1969; Levinson & Meira,
+2003), while other work has studied the degree of universality of polysemy patterns (e.g., Majid, Jordan, & Dunn, 2015;
+Youn et al., 2016). However, such studies have been restricted
+in scope due to reliance on manual methods. To find robust
+answers to the above questions on semantic typology, automatic methods are required to enable larger scale study.A central issue in cognitive science is the nature of the
+mental mapping between language and the world. One oftstudied question is how and why languages vary in the way
+they use words to partition semantic space (e.g., Berlin &
+Kay, 1969; Levinson & Meira, 2003). Polysemy?the use
+of a single word form to express multiple related senses?
+is a fundamental property of language that exemplifies this
+variation. Figure 1 shows how word forms across languages
+may differ in the sets of senses they cover. Despite this variation, there is also much cross-linguistic commonality in word
+meanings, as seen in the overlap of sense expression in Figure 1. How much do languages vary in their lexical semantics,
+and what contributes to the observed cross-linguistic patterns
+of polysemy? Here we present a principled and large-scale
+computational approach to these questions.
+Work in typology?studies of the constrained variation
+exhibited by languages?has identified important crosslinguistic generalizations regarding polysemy patterns across
+many semantic domains. For example, some research has focused on the primitives that underlie cross-linguistic lexical
+categorization (e.g., Berlin & Kay, 1969; Levinson & Meira,
+2003), while other work has studied the degree of universality of polysemy patterns (e.g., Majid, Jordan, & Dunn, 2015;
+Youn et al., 2016). However, such studies have been restricted
+in scope due to reliance on manual methods. To find robust
+answers to the above questions on semantic typology, automatic methods are required to enable larger scale study.
+Computational research has proposed various methodologies to explore lexical semantic structure at a more comprehensive scale. Previous work exploiting distributional representations has studied how language-pair semantic similarity
+is influenced by various factors, including phylogeny (e.g.,
+(Thompson, Roberts, & Lupyan, 2018; Beinborn & Choenni,
+2019)), geography (Eger, Hoenen, & Mehler, 2016), culture (Thompson et al., 2018), and conceptual structure (Xu,
+Duong, Malt, Jiang, & Srinivasan, in press). To the best of our
+knowledge, the only study considering lexical variation at the
+level of semantic domain is that by Thompson et al. (2018).
+That study used monolingual word embeddings for quantifying cross-linguistic semantic alignment in an inherently multilingual setting. Importantly, previous work has typically focused on descriptive analyses that are not evaluated against
+the empirical generalizations reported in the literature.
+We propose a novel framework1
+for quantifying lexical semantic variation that addresses these limitations in two respects. First, we develop a measure of semantic affinity that
+assesses the degree of semantic similarity of the corresponding word forms for a concept across many languages. We
+take an alternative approach to existing work in which we
+construct a common multilingual semantic space that enables
+a direct comparison of the lexical expression of concepts
+across multiple languages. Second, we evaluate our approach
+against known findings in the typological literature to assess
+the validity of our measure.
+Background on Lexical Semantic Variation
+We focus on some key findings regarding lexical variation and
+factors that influence it, at the level of individual concepts,
+domains, and languages. We summarize these empirical findings in Table 1, which we will assess our framework against.
+Individual Concepts. Semantic change is an important
+source of polysemy, and factors that influence that process
+may also influence the degree of semantic affinity of concepts. A number of studies have shown that the rate of semantic change is correlated with the psycholinguistc factors
+of frequency and degree of polysemy (estimated by number of senses), and minimally correlated with word length (a
+proxy of frequency) when frequency and polysemy are both
+controlled for (e.g., Hamilton, Leskovec, & Jurafsky, 2016).
+Pagel, Atkinson, and Meade (2007) also found that numbers
+(e.g., ?two?) are slowest to change among the grammatical
+categories, which follow a specified order (Table 1).
+Semantic Domains. Recently, much research on lexical semantic typology has studied cross-linguistic universals and
+principles of variation in patterns of polysemy (e.g., Berlin
+& Kay, 1969; Levinson & Meira, 2003; Majid et al., 2015;
+Youn et al., 2016). Two studies in particular enable us to
+assess the relative level of semantic affinity across different
+semantic domains. First, Majid et al. (2015), using naming
+tasks to elicit lexical data, manually determine an ordering of
+the degree of semantic variation among four conceptual domains across 12 Germanic languages; see Table 1. Second,
+Youn et al. (2016), using manual translation across 81 languages, found that a set of 23 basic concepts pertaining to
+the physical environment exhibits ?universal tendencies? in
+lexical semantics?i.e., has a high degree of cross-linguistic
+similarity. In particular, they show that this similarity is unaccounted for by phylogeny, geography, or climate (with one
+exception, which we return to in our results). Interestingly,
+Regier, Carstensen, and Kemp (2016) did find an effect of
+environmental factors on the cross-linguistic lexicalization of
+?snow? and ?ice? (but this subdomain is too small to assess).
+Language-Level Influences. Studies quantifying similarity between pairs of languages have exploited distributional
+properties extracted from monolingual (e.g., Beinborn &
+Choenni, 2019; Thompson et al., 2018) or bilingual (Eger
+et al., 2016) semantic spaces. The findings by and large highlight the correlation between languages? semantic and phylogenetic similarity (Beinborn & Choenni, 2019). Correlations
+of geographical (Eger et al., 2016) and cultural (Thompson
+et al., 2018) factors with cross-linguistic semantic similarity
+have been shown. However, an analysis of their influence
+across various semantic domains, and evaluation against empirical observations, have been lacking.
+Our Approach. Our work is closely related to that by
+Thompson et al. (2018), who presented a large-scale study
+of cross-linguistic semantic alignment at the level of the domain. That study used monolingual semantic spaces to quantify cross-linguistic semantic alignment, where the similarity
+between words representing a concept in two languages was
+estimated indirectly through the proximity of these words to
+their (partial) neighbourhood in individual spaces. Our work
+explores an alternative approach based on semantic affinity,
+which differs in that we: (1) quantify cross-linguistic semantic similarity in a direct and unmediated way, by constructing a common multilingual semantic space shared across languages of interest; (2) evaluate this framework against empirical findings in the literature, a critical aspect that was not explored in the previous work; and (3) leverage this framework
+to perform analysis of factors?both linguistic and extralinguistic?that influence semantic affinity of a concept, at
+the levels of a single concept and a domain.
+Datasets
+Translation Sets. Measuring cross-linguistic semantic
+affinity of a concept requires a set of words representing that
+concept in various languages. We used NorthEuralex (Dellert
+et al., 2017), a large lexicostatistical database providing accurate (manual) translations of over 1000 basic concepts in
+107 languages from 20 distinct language families of Northern
+Eurasia, including over 30 Indo-European languages. Each
+concept, represented by a corresponding German term, is annotated for part-of-speech (POS), and links to a set of word
+forms representing this concept in other languages. This
+yields a set of common concepts, spanning multiple domains,
+and including accurate translations of the same concept into
+words across multiple languages. Since these words naturally
+have various additional meanings across the languages, reflecting various patterns of polysemy, this introduces a natural testbed for our analysis. Despite limitations due to known
+quality control issues,2
+this is one of the most comprehensive
+multilingual datasets, suitable for this study.
+Cross-Linguistic Polysemy Data. BabelNet (Navigli &
+Ponzetto, n.d.) is a very large multilingual semantic network
+in which each node represents a language-independent meaning, to which words across the represented languages can
+link. For example, as illustrated in Figure 1, the node for
+the meaning ?A human written or spoken language used by a
+community? will be linked from the English word ?tongue?,
+as well as the corresponding words in Russian and Hebrew.
+Crucially, as seen in the figure, our target words that represent the same NorthEuralex concept in different languages
+may cluster different (sub)sets of meanings ? sharing a common set of meanings, but deviating in language-specific ones.
+For each of our concepts, we document the total number of
+distinct meanings associated with it cross-linguistically, as
+accessed through the words representing this concept in the
+set of languages used in this work. We restricted the list of
+concepts to those supported in Babelnet by at least 30 of
+the 35 languages considered in this study (i.e., at least 30
+of languages have a corresponding word-form entity in the
+database). This results in 697 concepts across many domains.
+Computational Framework
+Our goal is to measure the degree of semantic similarity of the
+corresponding words for a concept across many languages.
+We adopt a distributional semantics approach given the success of such models in capturing subtleties of word meaning
+(e.g., Hollis & Westbury, 2016; Pereira, Gershman, Ritter,
+& Botvinick, 2016). We construct multilingual common semantic spaces that enable the projection of words from multiple languages into a shared space (e.g., Conneau, Lample,
+Ranzato, Denoyer, & Jegou, 2017). Specifically, words in ?
+different languages that have roughly the same meaning are
+brought close to each other within a single vector space. For a
+given concept, we operationalize its semantic affinity across
+languages by the degree of similarity of the corresponding
+words? representations in the common semantic space. This
+notion of affinity can be extended to a semantic domain (a
+collection of concepts) and to languages (across all concepts).
+Building a Multilingual Semantic Space. We use the
+Facebook MUSE framework (Conneau et al., 2017), shown to
+obtain good results on many tasks (e.g., Artetxe & Schwenk,
+2019; Beinborn & Choenni, 2019), for construction of a multilingual semantic space. The model uses a set of automatically extracted bilingual dictionaries between pairs of languages to project monolingual word representations in two
+languages onto a common space. It does so while optimizing
+the mutual proximity of representations of an automatically
+extracted set of translation equivalents (words referring to the
+same entity; e.g., English ?apple?, French ?pomme?). Using English as a pivot language, the procedure can then be
+scaled to any number of languages L, assuming an English?
+L bilingual dictionary, and ultimately resulting in a common
+massively multilingual semantic space. Further details on this
+procedure can be found in Appendix A.
+For building our multilingual space, we use the
+set of 35 geographically-diverse languages supported by
+NorthEuralex, Babelnet and MUSE bilingual dictionaries,
+and the corresponding fastText monolingual embeddings
+(Grave, Bojanowski, Gupta, Joulin, & Mikolov, 2018). In
+training and validation, we excluded the entire set of words
+representing our target concepts from the list of translation
+equivalents whose proximity is optimized by MUSE in creating the common embedding space. Figure 2 illustrates
+that different concepts can have differing degrees of crosslinguistic similarity in the resulting common semantic space.
+Quantifying Semantic Affinity. The semantic affinity of a
+concept w.r.t. a set of languages amounts to the mutual proximity of embeddings representing the concept across various
+languages; that is, the ?tighter? the cluster of embeddings,
+the more (cross-linguistically) similar the concept is (cf. Figure 2). Formally, given a concept c and a set of N word forms
+representing c across a set of languages L={L1,L2,...,LN},
+we denote its corresponding 300-dimensional vector representations by Vc = {v
+c
+1
+, vc
+2
+,..., vc
+N
+}. Using cosine similarity as
+our similarity metric, we compute the centroid of Vc by calculating the average of its constituents. This procedure results
+in a vector in the direction of the cluster centroid:
+Cent(Vc
+) =
+1
+N ?
+i
+v
+c
+i
+, i?[1..N],kv
+c
+i
+k=1 (1)
+We then estimate cross-linguistic semantic affinity of c
+with respect to L by computing its cluster density, specifically, we average over individual words? cosine similarities
+to the (virtual) cluster centroid in Equation 1 (i ? [1..N]):
+SemAff(Vc
+) =
+1
+N ?
+i
+cos(vc
+i
+,Cent(Vc
+)) (2)
+Intuitively, semantic affinity mirrors the extent of meaning
+similarity of a concept as expressed across a set of languages.
+For example, as expected from Figure 2, we find higher semantic affinity for the concept corresponding to ?daughter?
+(0.766) than for that corresponding to ?edge? (0.572).
+Results on Concepts and Domains
+We first evaluate how well our measure of cross-linguistic semantic affinity matches empirical findings at the level of individual concepts and semantic domains (Table 1).
+Semantic Affinity of Concepts
+We hypothesize that factors that play a role in lexical semantic change (within a language) may also influence the degree
+of semantic affinity across languages. We thus suggest the
+following variables as predictors of cross-linguistic affinity:
+Mean Word Rank. We derive a ranked list of the top-N
+words in each language using frequencies recorded in wordfreq3 For a given concept c, we then average the ranks of its
+corresponding words across the languages.4
+Degree of Polysemy. We computed the total number of
+unique senses of the words associated with a concept across
+our languages (see the Datasets section for details).
+Mean Word Length. We computed the average length of
+word forms corresponding to a concept across our languages.
+We perform multiple regression analysis using the semantic affinity of concepts (SemAff, Equation 2) as the dependent
+variable, and the predictors above as independent variables;
+see Table 2. All variables together explain nearly 40% (adj.
+r
+2=0.381) of the variance. Our results are in line with previous findings on the relation of these psycholinguistic variables to semantic change (cf. Table 1), as we expected since
+lexical evolution is an important source of polysemy. Mean
+word rank is negatively correlated with semantic affinity, implying that less frequently used concepts have lower crosslinguistic semantic affinity. As well, concepts with a higher
+degree of polysemy exhibit higher cross-linguistic semantic
+diversity. Finally, mean word length shows the weakest correlation with affinity among the variables.
+predictor coef.(??10) std err(?) t-stat
+coeff 6.615 0.001 445.747
+mean word rank -0.242 0.002 -13.294
+degree of polysemy -0.200 0.002 -16.037
+mean word length 0.129 0.001 8.640
+Table 2: Multiple regression analysis. The response variable
+is concept semantic affinity, a real value in the 0?1 range.
+p < .001 in all cases.
+We further computed cross-linguistic semantic affinity for
+various POS categories; that is, by averaging SemAff over
+concepts that share the same POS in the NorthEuralex dataset,
+requiring a minimum of five concepts per tag. Table 3 (left)
+reports the results. Here too we find that our relative rankings
+replicate the relative stability over time of these categories as
+found by Pagel et al. (2007), with a single exception of a swap
+in ordering between verbs and nouns (cf. Table 1).
+3https://pypi.org/project/wordfreq/
+4Word frequency (which strictly correlates with rank in a language) is incomparable across different languages.
+To provide a fine-grained qualitative view of our framework, we visualize semantic affinities of 10 common concepts in the domain of kinship. Figure 3 reveals an interesting symmetry in this domain. Specifically, semantic affinity is
+higher for kin terms that are more closely related to ego than
+those farther away, and this trend is symmetric between male
+and female kin types. Concretely, ?aunt? and ?uncle? (and
+?grandmother? and ?grandfather?) show the lowest semantic
+affinity across languages, in comparison to the closer kin relations such as children, siblings, and parents of ego. This
+observation is consistent with independent empirical findings
+suggesting that remote kin terms, e.g., ?aunt? and ?uncle?, are
+most often extended to unrelated persons (Ballweg, 1969).
